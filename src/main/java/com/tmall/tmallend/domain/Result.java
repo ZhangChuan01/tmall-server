@@ -11,7 +11,7 @@ public class Result {
         Map<Object,Object> info = new HashMap<>();
         if(res != null){
             info.put("res",res);
-            info.put("msg","");
+            info.put("msg","成功");
             info.put("code",1);
         }else {
             info.put("res","");
@@ -27,7 +27,7 @@ public class Result {
         if(res != null){
             info.put("code",1);
             info.put("res",res);
-            info.put("msg","");
+            info.put("msg","成功");
         }else {
             info.put("code",0);
             info.put("res","");

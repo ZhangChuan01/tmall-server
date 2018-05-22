@@ -30,18 +30,51 @@ public class UserController {
         String name = reqMap.get("name").toString();
         String password = reqMap.get("password").toString();
         UserList user =  userRepository.findByNameAndPassword(name,password);
-        Map<Object,Object> info = new HashMap<>();
-        if(user != null){
-            info.put("code",1);
-            info.put("res",user);
-            info.put("msg","");
-        }else {
-            info.put("code",0);
-            info.put("res","");
-            info.put("msg","用户名或密码错误");
+        Result data = new Result();
+        return data.info(user,"用户名或密码错误");
+    }
+    @PostMapping(value = "/user/register")
+    public String register(@RequestBody Map<Object,Object> reqMap){
+        String name = reqMap.get("name").toString();
+        String password = reqMap.get("password").toString();
+        String phoneNumber = reqMap.get("phoneNmuber").toString();
+        UserList checkName = userRepository.findByName(name);
+        if(checkName != null){
+            Result data = new Result();
+            return data.info(null,"用户名已存在");
         }
-        String json = new Gson().toJson(info);
-        return json;
-//        return userRepository.findByNameAndPassword(name,password);
+        UserList checkNumber = userRepository.findByPhoneNumber(phoneNumber);
+        if(checkNumber != null){
+            Result data = new Result();
+            return data.info(null,"该手机号已注册");
+        }
+        UserList addUser = new UserList();
+        addUser.setName(name);
+        addUser.setPassword(password);
+        addUser.setPhoneNumber(phoneNumber);
+        UserList res = userRepository.saveAndFlush(addUser);
+        Result data = new Result();
+        return data.info(res);
+    }
+    @PostMapping(value = "/user/forgetPassword")
+    public String resetPassword(@RequestBody Map<Object,Object> reqMap){
+        String phoneNumber = reqMap.get("phoneNumber").toString();
+        String newPassword = reqMap.get("newPassword").toString();
+        UserList checkNumber = userRepository.findByPhoneNumber(phoneNumber);
+        Result data = new Result();
+        if(checkNumber != null){
+            UserList setPassword = new UserList();
+            setPassword.setId(checkNumber.getId());
+            setPassword.setPassword(newPassword);
+            setPassword.setName(checkNumber.getName());
+            setPassword.setPhoneNumber(checkNumber.getPhoneNumber());
+            if(userRepository.save(setPassword) != null){
+                return data.info("重置成功");
+            }else {
+                return data.info(null,"重置失败");
+            }
+        }else {
+            return data.info(null,"该手机号未注册");
+        }
     }
 }

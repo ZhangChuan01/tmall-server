@@ -1,4 +1,4 @@
-package com.tmall.tmallend.domain;
+package com.tmall.tmallend.util;
 
 import com.google.gson.Gson;
 

@@ -1,7 +1,6 @@
 package com.tmall.tmallend.controller;
 
-import com.google.gson.Gson;
-import com.tmall.tmallend.domain.Result;
+import com.tmall.tmallend.util.Result;
 import com.tmall.tmallend.domain.UserList;
 import com.tmall.tmallend.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +17,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping(value = "/user/list")
     public String getList(){
@@ -29,9 +30,20 @@ public class UserController {
     public String login(@RequestBody Map<String,Object> reqMap){
         String name = reqMap.get("name").toString();
         String password = reqMap.get("password").toString();
-        UserList user =  userRepository.findByNameAndPassword(name,password);
+        UserList user1 =  userRepository.findByNameAndPassword(name,password);
+        UserList user2 =  userRepository.findByPhoneNumberAndPassword(name,password);
         Result data = new Result();
-        return data.info(user,"用户名或密码错误");
+        if(user1 != null){
+            httpSession.setAttribute("userInfo", user1);
+            httpSession.setMaxInactiveInterval(1800);
+            return data.info(user1);
+        }
+        if(user2 != null){
+            httpSession.setAttribute("userInfo", user2);
+            httpSession.setMaxInactiveInterval(1800);
+            return data.info(user2);
+        }
+        return data.info(null,"用户名或密码错误");
     }
     @PostMapping(value = "/user/register")
     public String register(@RequestBody Map<Object,Object> reqMap){

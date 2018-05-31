@@ -17,6 +17,43 @@ public class Goods {
     private String remarkText;
     private int remark;
     private String prompt;
+    private int sales;
+    private String place;
+    private String url;
+    private int price2;
+
+    public void setPrice2(int price2) {
+        this.price2 = price2;
+    }
+
+    public int getPrice2() {
+        return price2;
+    }
+
+    public void setUrl(String url) {
+
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public int getSales() {
+        return sales;
+    }
+
+    public String getPlace() {
+        return place;
+    }
 
     public void setGid(int gid) {
         this.gid = gid;

@@ -4,12 +4,12 @@ import com.tmall.tmallend.domain.*;
 import com.tmall.tmallend.respository.*;
 import com.tmall.tmallend.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ImageListController {
@@ -31,15 +31,6 @@ public class ImageListController {
     @GetMapping(value = "/image/banner")
     public String getBanner() {
         List<Banner> res = bannerRespository.findAll();
-        Result data = new Result();
-        return data.info(res);
-    }
-
-    @Autowired
-    private GoodsRepository goodsRepository;
-    @GetMapping(value = "/image/goods")
-    public String getGoods(){
-        List<Goods> res = goodsRepository.findAll();
         Result data = new Result();
         return data.info(res);
     }

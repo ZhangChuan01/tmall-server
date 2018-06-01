@@ -34,7 +34,7 @@ public class GoodsController {
     @GetMapping(value = "/goods/detail/selectInfo")
     public String getSelctInfo(@RequestParam("gId") int id){
        List<SelectInfo> res = selectInfoRespository.findByGidOrderByIdAsc(id);
-        Result data = new Result();
-        return data.info(res);
+       Result data = new Result();
+       return data.info(res);
     }
 }

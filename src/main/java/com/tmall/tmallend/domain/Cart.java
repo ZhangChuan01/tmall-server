@@ -12,6 +12,24 @@ public class Cart {
     private int gid;
     private int gnum;
     private int userid;
+    private String ginfo;
+    private String gpath;
+
+    public void setGpath(String gpath) {
+        this.gpath = gpath;
+    }
+
+    public String getGpath() {
+        return gpath;
+    }
+
+    public void setGinfo(String ginfo) {
+        this.ginfo = ginfo;
+    }
+
+    public String getGinfo() {
+        return ginfo;
+    }
 
     public void setId(int id) {
         this.id = id;

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SelectInfoRespository extends JpaRepository<SelectInfo,Integer>{
     List<SelectInfo> findByGidOrderByIdAsc(int id);
+    SelectInfo findByGidAndInfo(int gid,String ginfo);
 }

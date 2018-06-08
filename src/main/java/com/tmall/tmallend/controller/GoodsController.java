@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -36,5 +37,18 @@ public class GoodsController {
        List<SelectInfo> res = selectInfoRespository.findByGidOrderByIdAsc(id);
        Result data = new Result();
        return data.info(res);
+    }
+    @GetMapping(value = "/goods/detail/selected")
+    public String getSelectedinfo(@RequestParam("gid") int gid,@RequestParam("ginfo") String ginfo){
+        SelectInfo res = selectInfoRespository.findByGidAndInfo(gid,ginfo);
+        Result data = new Result();
+        return data.info(res);
+    }
+    @GetMapping(value = "/goods/search")
+    public String searchGood(@RequestParam("name") String name) throws UnsupportedEncodingException {
+        String searchInfo = java.net.URLDecoder.decode(name,"UTF-8");
+        List<Goods> res = goodsRepository.searchGood(searchInfo);
+        Result data = new Result();
+        return data.info(res);
     }
 }

@@ -4,10 +4,7 @@ import com.tmall.tmallend.util.Result;
 import com.tmall.tmallend.domain.UserList;
 import com.tmall.tmallend.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -26,7 +23,7 @@ public class UserController {
         Result data = new Result();
         return data.info(res);
     }
-    @PostMapping(value = "/user/login")
+    @PutMapping(value = "/user/login")
     public String login(@RequestBody Map<String,Object> reqMap){
         String name = reqMap.get("name").toString();
         String password = reqMap.get("password").toString();
@@ -49,18 +46,18 @@ public class UserController {
     public String register(@RequestBody Map<Object,Object> reqMap){
         String name = reqMap.get("name").toString();
         String password = reqMap.get("password").toString();
-        String phoneNumber = reqMap.get("phoneNmuber").toString();
+        String phoneNumber = reqMap.get("phoneNumber").toString();
         UserList checkName = userRepository.findByName(name);
-        if(checkName != null){
-            Result data = new Result();
-            return data.info(null,"用户名已存在");
-        }
         UserList checkNumber = userRepository.findByPhoneNumber(phoneNumber);
         if(checkNumber != null){
             Result data = new Result();
             return data.info(null,"该手机号已注册");
         }
         UserList addUser = new UserList();
+        if(checkName != null){
+            Result data = new Result();
+            return data.info(null,"用户名已存在");
+        }
         addUser.setName(name);
         addUser.setPassword(password);
         addUser.setPhoneNumber(phoneNumber);
@@ -68,19 +65,15 @@ public class UserController {
         Result data = new Result();
         return data.info(res);
     }
-    @PostMapping(value = "/user/forgetPassword")
+    @PutMapping(value = "/user/forgetPassword")
     public String resetPassword(@RequestBody Map<Object,Object> reqMap){
         String phoneNumber = reqMap.get("phoneNumber").toString();
         String newPassword = reqMap.get("newPassword").toString();
         UserList checkNumber = userRepository.findByPhoneNumber(phoneNumber);
         Result data = new Result();
         if(checkNumber != null){
-            UserList setPassword = new UserList();
-            setPassword.setId(checkNumber.getId());
-            setPassword.setPassword(newPassword);
-            setPassword.setName(checkNumber.getName());
-            setPassword.setPhoneNumber(checkNumber.getPhoneNumber());
-            if(userRepository.save(setPassword) != null){
+            int result = userRepository.setPassword(newPassword,checkNumber.getId());
+            if(result != 0){
                 return data.info("重置成功");
             }else {
                 return data.info(null,"重置失败");

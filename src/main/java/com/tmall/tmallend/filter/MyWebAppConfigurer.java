@@ -9,7 +9,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/*","/goods/**","/image/*");
+        registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/*","/goods/**","/image/*","/cart/*","/message/*");
         super.addInterceptors(registry);
     }
 

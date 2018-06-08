@@ -13,15 +13,6 @@ public class Cart {
     private int gnum;
     private int userid;
     private String ginfo;
-    private String gpath;
-
-    public void setGpath(String gpath) {
-        this.gpath = gpath;
-    }
-
-    public String getGpath() {
-        return gpath;
-    }
 
     public void setGinfo(String ginfo) {
         this.ginfo = ginfo;

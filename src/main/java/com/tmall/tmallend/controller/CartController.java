@@ -1,5 +1,7 @@
 package com.tmall.tmallend.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.tmall.tmallend.domain.Cart;
 import com.tmall.tmallend.domain.CartList;
 import com.tmall.tmallend.respository.CartRespository;
@@ -7,10 +9,7 @@ import com.tmall.tmallend.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class CartController {
@@ -66,7 +65,7 @@ public class CartController {
     }
 
     @DeleteMapping(value = "/cart/delete")
-    public String deleteGoods(@RequestParam("id") int id){
+    public String deleteGood(@RequestParam("id") int id){
         int res = cartRespository.deleteGoods(id);
         Result data = new Result();
         if(res != 0){
@@ -88,4 +87,25 @@ public class CartController {
             return data.info(null,"数量更新失败");
         }
     }
+
+    @DeleteMapping(value = "/cart/deleteAll")
+    public String deleteGoods(@RequestParam("arr") String arr){
+        JsonArray jsonArray = new JsonParser().parse(arr).getAsJsonArray();
+        Boolean flag = true;
+        for(int i=0;i<jsonArray.size();i++){
+            int id = jsonArray.get(i).getAsInt();  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
+            System.out.println(id) ;  // 得到 每个对象中的属性值
+            int res = cartRespository.deleteGoods(id);
+            if(res == 0){
+                flag = false;
+            }
+        }
+        Result data = new Result();
+        if(flag){
+            return data.info("结算成功","","结算成功");
+        }else {
+            return data.info(null,"结算失败");
+        }
+    }
+
 }

@@ -6,7 +6,10 @@
 	<groupId>com.tmall</groupId>
 	<artifactId>tmallend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>tmall</module>
+    </modules>
+    <packaging>pom</packaging>
 
 	<name>tmallend</name>
 	<description>Tmall Server project for Spring Boot</description>

@@ -13,7 +13,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception{
         String uri = request.getRequestURI();
-        if(uri.contains(".css") || uri.contains(".js") || uri.contains(".png")|| uri.contains(".jpg")|| uri.contains(".webp")){
+        if(uri.contains(".css") || uri.contains(".js") || uri.contains(".png")|| uri.contains(".jpg")|| uri.contains(".webp")|| uri.contains(".gif")){
             //如果发现是css或者js文件，直接放行
             return true;
         }

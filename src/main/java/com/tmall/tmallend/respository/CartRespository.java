@@ -13,12 +13,12 @@ public interface CartRespository extends JpaRepository<Cart,Integer> {
     List<Cart> findByUserid(int userid);
     @Modifying
     @Transactional
-    @Query("update Cart cart set cart.gnum = ?1 where cart.id = ?2")
+    @Query("update Cart cart set cart.gnum = ?1 where cart.cid = ?2")
     int updateGoodsNum(int num,int id);
     @Modifying
     @Transactional
-    @Query("delete from Cart cart where cart.id = ?1")
+    @Query("delete from Cart cart where cart.cid = ?1")
     int deleteGoods(int id);
-    @Query(value = "SELECT a.*,b.stock,b.price,b.path,c.name,c.price2  FROM cart a LEFT JOIN select_info b ON a.gid = b.gid AND a.ginfo = b.info LEFT JOIN goods c ON b.gid = c.gid WHERE a.userid = ?1", nativeQuery = true)
+    @Query(value = "SELECT a.*,b.stock,b.price,b.path,b.id,c.name,c.price2  FROM cart a LEFT JOIN select_info b ON a.gid = b.gid AND a.ginfo = b.info LEFT JOIN goods c ON b.gid = c.gid WHERE a.userid = ?1", nativeQuery = true)
     List<Object[]> getCartList(int userid);
 }

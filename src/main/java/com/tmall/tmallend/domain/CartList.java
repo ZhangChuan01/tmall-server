@@ -16,6 +16,15 @@ public class CartList {
     private int gid;
     private int userid;
     private int id;
+    private int stockId;
+
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
+    }
+
+    public int getStockId() {
+        return stockId;
+    }
 
     public void setId(int id) {
         this.id = id;

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Cart {
     @Id
     @GeneratedValue
-    private int id;
+    private int cid;
     private int gid;
     private int gnum;
     private int userid;
@@ -23,7 +23,7 @@ public class Cart {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.cid = cid;
     }
 
     public void setGid(int gid) {
@@ -39,7 +39,7 @@ public class Cart {
     }
 
     public int getId() {
-        return id;
+        return cid;
     }
 
     public int getGid() {

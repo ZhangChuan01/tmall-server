@@ -14,6 +14,10 @@ public class SessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception{
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         String uri = request.getRequestURI();
         if(uri.contains(".css") || uri.contains(".js") || uri.contains(".png")|| uri.contains(".jpg")|| uri.contains(".webp")|| uri.contains(".gif")){
             //如果发现是css或者js文件，直接放行

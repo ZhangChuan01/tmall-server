@@ -22,6 +22,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             String res = "请登录";
             Result data = new Result();
             response.setContentType("text/html;charset=UTF-8");
+            response.setHeader("Access-Control-Allow-Origin","*");
             PrintWriter out = response.getWriter();
             out.write(data.info(null,res));
             return false;

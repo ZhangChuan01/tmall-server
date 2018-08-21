@@ -12,6 +12,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception{
+        response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Access-Control-Allow-Origin","*");
         String uri = request.getRequestURI();
         if(uri.contains(".css") || uri.contains(".js") || uri.contains(".png")|| uri.contains(".jpg")|| uri.contains(".webp")|| uri.contains(".gif")){
             //如果发现是css或者js文件，直接放行
@@ -21,8 +23,6 @@ public class SessionInterceptor implements HandlerInterceptor {
         if(obj == null){
             String res = "请登录";
             Result data = new Result();
-            response.setContentType("text/html;charset=UTF-8");
-            response.setHeader("Access-Control-Allow-Origin","*");
             PrintWriter out = response.getWriter();
             out.write(data.info(null,res));
             return false;
